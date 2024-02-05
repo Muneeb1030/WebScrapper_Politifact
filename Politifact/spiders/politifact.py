@@ -68,7 +68,55 @@ class PolitifactSpider(Spider):
     
     
     def write_to_csv(self):
-        pass
+        os.chdir(r"D:\Projects\Assignments\DataScience\Web Scrapers\Politifact\Politifact")
+        # Paths used for saving file 
+        csv_path = 'output_data/Articles.csv'
+        # Data Header (the content to be scrapped)
+        columns = ['Author' ,'SayingDate' ,'Headline' ,'Ruling' ,'Publisher' ,'ArticleUrl' ,'ArticleTags' ,'ArticleShortResponse' ,'ArticleShortDiscussion' ,'ArticleDiscussion' ,'ArticleSources']
+        
+        iterations = len(self.ArticleShortResponse)
+        # if anything returns, only then we need following processing
+        if iterations > 0:
+            # From each Item in the Items Extracting the desired data
+            new_data_list = [
+                {
+                    'Author' : self.Author[idx],
+                    'SayingDate' : self.SayingDate[idx],
+                    'Headline' : self.Headline[idx],
+                    'Ruling' : self.Ruling[idx],
+                    'Publisher' : self.Publisher[idx],
+                    'ArticleUrl' : self.ArticleUrl[idx],
+                    'ArticleTags' : self.ArticleTags[idx],
+                    'ArticleShortResponse' : self.ArticleShortResponse[idx],
+                    'ArticleShortDiscussion' : self.ArticleShortDiscussion[idx],
+                    'ArticleDiscussion' : self.ArticleDiscussion[idx],
+                    'ArticleSources' : self.ArticleSources[idx]
+                }
+                for idx in range(iterations)
+            ]
+            
+            # Make sure there is already a file or else create a new file to avaoid exception
+            try:
+                df = pd.read_csv(csv_path)
+            except FileNotFoundError:
+                df = pd.DataFrame(columns=columns)
+            
+            # Adding data to dataframe and then writing in the csv file    
+            df = pd.concat([df, pd.DataFrame(new_data_list)], ignore_index=True)
+            df.to_csv(csv_path, index=False, mode='a', header=not os.path.isfile(csv_path))
+            
+            self.Author = self.Author [iterations:]
+            self.SayingDate = self.SayingDate [iterations:]
+            self.Headline = self.Headline [iterations:]
+            self.Ruling = self.Ruling [iterations:]
+            self.Publisher = self.Publisher [iterations:]
+            self.ArticleUrl = self.ArticleUrl[iterations:]
+            
+            self.ArticleTags.clear()
+            self.ArticleSources.clear()
+            self.ArticleDiscussion.clear()
+            self.ArticleShortDiscussion.clear()
+            self.ArticleShortResponse.clear()
     
     def DownloadContentInPost(self, response):
         title = response.meta['statement_text']
