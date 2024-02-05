@@ -105,5 +105,15 @@ class PolitifactSpider(Spider):
         self.ArticleDiscussion.append(statment_discussed)
         self.ArticleSources.append(statement_facts)
             
-
+        Name = title.replace('"', ' ').strip()
+        
+        try:
+            item = PolitifactItem()
+            
+            item['title'] = [Name[:20]]
+            item['image_urls'] = response.xpath('//*[@class="m-display__inner"]//picture/img/@data-src').extract()
+            
+            yield item
+        except:
+            pass
           

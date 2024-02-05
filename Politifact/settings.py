@@ -7,6 +7,8 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+import os
+
 
 BOT_NAME = "Politifact"
 
@@ -63,7 +65,13 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-
+if not os.path.exists('output_data\\Images'):
+    os.makedirs('output_data\\Images')
+ITEM_PIPELINES = {
+   'scrapy.pipelines.images.ImagesPipeline': 1,
+   'Politifact.pipelines.PolitifactPipeline': 2,
+}
+IMAGES_STORE = os.path.join(os.getcwd(),"output_data\\Images")
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
