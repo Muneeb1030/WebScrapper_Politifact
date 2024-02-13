@@ -214,6 +214,7 @@ class PolitifactSpider(Spider):
         with open(os.path.join(output_directory, f"{filename}.txt"), "w", encoding="utf-8") as file:
             file.write(f"Author: {data_item['Author']}\n")
             file.write(f"Saying Date: {data_item['SayingDate']}\n")
+            file.write(f"Headline : {headline}\n\n")
             file.write(f"Ruling: {data_item['Ruling']}\n")
             file.write(f"Publisher: {data_item['Publisher']}\n\n")
             file.write(f"Article URL: {data_item['ArticleUrl']}\n\n")
