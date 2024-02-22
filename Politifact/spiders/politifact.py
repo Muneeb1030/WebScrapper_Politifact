@@ -26,6 +26,7 @@ class PolitifactSpider(Spider):
     article_sources_list = []
 
     def parse(self, response):
+        self.create_directories()
         # Pause for 2 seconds to allow proper page loading   
         sleep(2)
         
@@ -77,7 +78,7 @@ class PolitifactSpider(Spider):
     
     def write_to_csv(self):
         # Change directory to the specified path
-        os.chdir(r"D:\Projects\Assignments\DataScience\Web Scrapers\Politifact\Politifact")
+        os.chdir(r"D:\Projects\Assignments\DataScience\Web Scrapers\Politifact")
         
         # Paths used for saving file
         csv_path = 'output_data/Articles.csv'
@@ -224,3 +225,16 @@ class PolitifactSpider(Spider):
             file.write(f"Article Sources: {data_item['ArticleSources']}\n\n")
             file.write(f"Article Discussion: {data_item['ArticleDiscussion']}\n")
     
+    def create_directories(self):
+        output_directory = 'output_data'
+        if not os.path.exists(output_directory):
+            os.makedirs(output_directory)
+            
+        articles_sub_directory = f'{output_directory}/Articles'
+        if not os.path.exists(articles_sub_directory):
+            os.makedirs(articles_sub_directory)  
+        
+        images_sub_directory = f'{output_directory}/Images'
+        if not os.path.exists(images_sub_directory):
+            os.makedirs(images_sub_directory) 
+            

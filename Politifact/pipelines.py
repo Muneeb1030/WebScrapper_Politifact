@@ -12,7 +12,7 @@ class PolitifactPipeline:
 
     def process_item(self, item, spider):
         if item['status']:
-            os.chdir("D:\Projects\Assignments\DataScience\Web Scrapers\Politifact\Politifact\output_data\Images")
+            os.chdir("D:\Projects\Assignments\DataScience\Web Scrapers\Politifact\output_data\Images")
             if item['images'][0]['path']:
                 new_image_name = item['title'][0] + '.jpg'
                 new_image_path = 'full/' + new_image_name
