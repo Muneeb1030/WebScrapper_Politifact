@@ -52,6 +52,6 @@ Explore the project in detail through my [Medium blog](https://medium.com/@m.mun
 ## Contributors
 - M Muneeb ur Rehman
 
-Feel free to fork, contribute, and enhance the capabilities of this Mastodon scraper. Happy scraping! 🌐💻
+Feel free to fork, contribute, and enhance the capabilities of this Politifact scraper. Happy scraping! 🌐💻
 
 
